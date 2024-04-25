@@ -12,7 +12,7 @@
 # которые могут иметь специфические методы (например, feed_animal() для ZooKeeper и heal_animal() для Veterinarian).
 
 import random
-
+import pickle
 
 class Animal:
     def __init__(self, name, age, food):
@@ -134,18 +134,42 @@ class Zoo:
         for employee in self.employees:
             print(employee.info())
 
+
+def save_zoo(zoo):
+    with open('Save/zoo_data.pkl', 'wb') as file:
+        pickle.dump(zoo, file)
+    print("Zoo data saved successfully.")
+
+
+def load_zoo():
+    try:
+        with open('Save/zoo_data.pkl', 'rb') as file:
+            zoo = pickle.load(file)
+        print("Zoo data loaded successfully.")
+        return zoo
+    except FileNotFoundError:
+        print("No saved zoo data found.")
+        return None
+
+
 birds_list = ["Кукушка", "Соловей", "Сова", "Пингвин", "Курица", "Киви", "Гагара", "Орёл", "Коршун", "Воробей"]
 mammals_list = ["Крокодил", "Лев", "Лиса", "Слон", "Кошка", "Собака", "Кот", "Панда", "Коза", "Кролик"]
 reptiles_list = ["Крокодил", "Черепаха", "Ящерица", "Лягушка", "Геккон", "Динозавр", "Игуана"]
+names_list = ["Вася", "Петя", "Маша", "Коля", "Ваня", "Саша", "Ваня", "Коля", "Ваня", "Саша"]
 
-zoo = Zoo()
+
+try:
+    zoo = load_zoo()
+except FileNotFoundError:
+    print("No saved zoo data found.")
+    zoo = Zoo()
 
 zoo.add_bird(random.choice(birds_list), random.randint(1,5), "Семечки", True)
 zoo.add_bird(random.choice(birds_list), random.randint(1,5), "Семечки", False)
 zoo.add_mammal(random.choice(mammals_list), random.randint(1,15), "Сено", False)
 zoo.add_reptile(random.choice(reptiles_list), random.randint(1,50), "Мяяясо", True)
-zoo.add_ZooKeeper("Вася", "Смотритель животных", 35000)
-zoo.add_vererenarian("Петя", "Ветеринар", 45000)
+zoo.add_ZooKeeper(random.choice(names_list), "Смотритель животных", random.randint(30000,50000))
+zoo.add_vererenarian(random.choice(names_list), "Ветеринар", random.randint(30000,50000))
 
 zoo.list_animals()
 zoo.list_employees()
@@ -166,4 +190,34 @@ print("\n")
 for i in zoo.animals:
     i.eat()
 
+save_zoo(zoo)
 
+'''
+
+
+    text = task_list_in_progress.get(0, tk.END)
+    with open("in_progress_tasks.txt", "w") as file:
+        for text in text:
+            new_text = str(text) + "\n"
+            file.write(new_text)
+
+    text = task_list_done.get(0, tk.END)
+    with open("done_tasks.txt", "w") as file:
+        for text in text:
+            new_text=str(text)+"\n"
+            file.write(new_text)
+
+
+def load_data():
+    with open("new_tasks.txt", "r") as file:
+        for line in file: #каждая строчка читается отдельно
+            if line != "\n": task_list_new.insert(tk.END, line)
+
+    with open("in_progress_tasks.txt") as file:
+        for line in file:
+            if line != "\n": task_list_in_progress.insert(tk.END, line)
+
+    with open("done_tasks.txt") as file:
+        for line in file:
+            if line != "\n": task_list_done.insert(tk.END, line)
+'''
