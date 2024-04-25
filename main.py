@@ -12,12 +12,14 @@
 # которые могут иметь специфические методы (например, feed_animal() для ZooKeeper и heal_animal() для Veterinarian).
 
 
-class Animal():
+class Animal:
     def __init__(self, name, age, food):
         self.name = name
         self.age = age
         self.food = food
 
+    def info(self):
+        print(f"Название: {self.name}, Возраст: {self.age}, Пища: {self.food}")
 
     def make_sound(self):
         pass
@@ -25,11 +27,11 @@ class Animal():
     def eat(self):
         pass
 
+
 class Bird(Animal):
     def __init__(self, name, age, food, can_fly):
         super().__init__(name, age, food)
         self.can_fly = can_fly
-        print(f"Животное добавлено: {self.name}")
 
     def make_sound(self):
         print(f"Птичка {self.name} говорит: 'Чик-чирик'")
@@ -42,7 +44,6 @@ class Mammal(Animal):
     def __init__(self, name, age, food, has_tail):
         super().__init__(name, age, food)
         self.has_tail = has_tail
-        print(f"Животное добавлено: {self.name}")
 
     def make_sound(self):
         print(f"Млекопитающее {self.name} говорит: 'Муууу'")
@@ -50,39 +51,45 @@ class Mammal(Animal):
     def eat(self):
         print(f"Млекопитающее {self.name} покушало {self.food}")
 
+
 class Reptile(Animal):
     def __init__(self, name, age, food, can_swim):
         super().__init__(name, age, food)
         self.can_swim = can_swim
-        print(f"Животное добавлено: {self.name}")
+
 
     def make_sound(self):
         print(f"Рептилия {self.name} ничего не говорит, только молча таращится на тебя")
 
     def eat(self):
-        print(f"Рептилия {self.name} съела {self.food})")
+        print(f"Рептилия {self.name} съела {self.food}")
 
 
-class Employee():
+class Employee:
     def __init__(self, name, job, salary):
         self.name = name
         self.job = job
         self.salary = salary
 
+    def info(self):
+        print(f"Имя: {self.name}, Должность: {self.job}, Зарплата: {self.salary}")
+
+
 class ZooKeeper(Employee):
     def __init__(self, name, job, salary):
         super().__init__(name, job, salary)
 
-    def feed_animal(self, animal):
+    def feed(self, animal):
         print(f"Смотритель {self.name} покормил {animal.name}")
+        animal.eat()
+
 
 class Veterinarian(Employee):
     def __init__(self, name, job, salary):
         super().__init__(name, job, salary)
 
-    def heal_animal(self, animal):
+    def heal(self, animal):
         print(f"У собачки боли, у кошечки боли, у {animal.name} всё пройди. Ветеринар {self.name} вылечил {animal.name}")
-
 
 
 class Zoo:
@@ -90,37 +97,66 @@ class Zoo:
         self.animals = []
         self.employees = []
 
-    def add_animal(self, name, species, food, can_fly=False, has_tail=False, can_swim=False):
-        new_animal = Animal(name, species, food)
-        self.animals.append(new_animal)
-        print(f"Животное добавлено: {new_animal}")
+    def add_bird(self, name, age, food, can_fly):
+        new_bird = Bird(name, age, food, can_fly)
+        self.animals.append(new_bird)
+        print(f"Птица добавлена: {new_bird.name}")
 
-    def add_employee(self, name, job, salary):
-        new_employee = Employee(name, job, salary)
-        self.employees.append(new_employee)
-        print(f"Сотрудник добавлен: {new_employee}")
+    def add_mammal(self, name, age, food, has_tail):
+        new_mammal = Mammal(name, age, food, has_tail)
+        self.animals.append(new_mammal)
+        print(f"Млекопитающее добавлено: {new_mammal.name}")
+
+    def add_reptile(self, name, age, food, can_swim):
+        new_reptile = Reptile(name, age, food, can_swim)
+        self.animals.append(new_reptile)
+        print(f"Рептилия добавлена: {new_reptile.name}")
+
+    def add_ZooKeeper(self, name, job, salary):
+        new_zookeeper = ZooKeeper(name, job, salary)
+        self.employees.append(new_zookeeper)
+        print(f"Сотрудник добавлен: {new_zookeeper.name}")
+
+    def add_vererenarian(self, name, job, salary):
+        new_vererenarian = Veterinarian(name, job, salary)
+        self.employees.append(new_vererenarian)
+        print(f"Сотрудник добавлен: {new_vererenarian.name}, {new_vererenarian.job}")
 
     def list_animals(self):
-        print("Животные в зоопарке:")
+        print("\nЖивотные в зоопарке:")
         for animal in self.animals:
-            print(animal)
+            print(animal.info())
 
     def list_employees(self):
-        print("Сотрудники зоопарка:")
+        print("\nСотрудники зоопарка:")
         for employee in self.employees:
-            print(employee)
+            print(employee.info())
+
 
 zoo = Zoo()
-zoo.add_animal("Лео", "Лев")
-zoo.add_animal("Серена", "Зебра")
-zoo.list_animals()
 
-zoo.add_employee("Алексей", "Уборщик")
-zoo.add_employee("Марина", "Зоолог")
+zoo.add_bird("Кукушка", 2, "Семечки", True)
+zoo.add_bird("Пингвин", 4, "Семечки", False)
+zoo.add_mammal("Вол", 6, "Сено", False),
+zoo.add_reptile("Крокодил", 23, "Мяяясо", True)
+zoo.add_ZooKeeper("Вася", "Смотритель животных", 35000)
+zoo.add_vererenarian("Петя", "Ветеринар", 45000)
+
+zoo.list_animals()
 zoo.list_employees()
 
-animals = [Bird("Кукушка", 2, "Семечки", True),
-               Mammal("Вол", 3, "Сено", False),
-               Reptile("Крокодил", 1, "Мяяясо", True)]
-emploees = [ZooKeeper("Вася", "Смотритель животных", 35000),
-            Veterinarian("Петя", "Ветеринар", 45000)]
+print("\nВремя ухаживать за животными")
+for i in zoo.employees:
+    if i.job == "Смотритель животных":
+        for j in zoo.animals:
+            i.feed(j)
+    elif i.job == "Ветеринар":
+        for j in zoo.animals:
+            i.heal(j)
+
+print("\n")
+for i in zoo.animals:
+    i.make_sound()
+print("\n")
+for i in zoo.animals:
+    i.eat()
