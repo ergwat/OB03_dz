@@ -11,6 +11,8 @@
 # Создайте классы для сотрудников, например, ZooKeeper, Veterinarian,
 # которые могут иметь специфические методы (например, feed_animal() для ZooKeeper и heal_animal() для Veterinarian).
 
+import random
+
 
 class Animal:
     def __init__(self, name, age, food):
@@ -132,13 +134,16 @@ class Zoo:
         for employee in self.employees:
             print(employee.info())
 
+birds_list = ["Кукушка", "Соловей", "Сова", "Пингвин", "Курица", "Киви", "Гагара", "Орёл", "Коршун", "Воробей"]
+mammals_list = ["Крокодил", "Лев", "Лиса", "Слон", "Кошка", "Собака", "Кот", "Панда", "Коза", "Кролик"]
+reptiles_list = ["Крокодил", "Черепаха", "Ящерица", "Лягушка", "Геккон", "Динозавр", "Игуана"]
 
 zoo = Zoo()
 
-zoo.add_bird("Кукушка", 2, "Семечки", True)
-zoo.add_bird("Пингвин", 4, "Семечки", False)
-zoo.add_mammal("Вол", 6, "Сено", False),
-zoo.add_reptile("Крокодил", 23, "Мяяясо", True)
+zoo.add_bird(random.choice(birds_list), random.randint(1,5), "Семечки", True)
+zoo.add_bird(random.choice(birds_list), random.randint(1,5), "Семечки", False)
+zoo.add_mammal(random.choice(mammals_list), random.randint(1,15), "Сено", False)
+zoo.add_reptile(random.choice(reptiles_list), random.randint(1,50), "Мяяясо", True)
 zoo.add_ZooKeeper("Вася", "Смотритель животных", 35000)
 zoo.add_vererenarian("Петя", "Ветеринар", 45000)
 
@@ -160,3 +165,5 @@ for i in zoo.animals:
 print("\n")
 for i in zoo.animals:
     i.eat()
+
+
